@@ -10,21 +10,6 @@
 npm install --save editorman
 ```
 
-## Usage
-
-```jsx
-import React, { Component } from 'react'
-
-import MyComponent from 'editorman'
-import 'editorman/dist/index.css'
-
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
-```
-
 ## License
 
 MIT © [](https://github.com/)
