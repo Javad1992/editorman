@@ -3,6 +3,7 @@ import styles from './styles.module.css'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { RiCloseLine } from "react-icons/ri";
+import { useEffect } from 'react';
 
 const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, staticData }) => {
 
@@ -419,6 +420,15 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
 
         } else if (editableTitle === 'expertise') {
 
+          useEffect(() => {
+            setGardens(gardenDefaultValue)
+            setFarms(farmsDefaultValue)
+            setEarthenGreenhouse(earthenGreenhouseDefaultValue)
+            setHydroponicGreenhouse(hydroponicGreenhouseDefaultValue)
+            setLivestockAndBirds(livestockAndBirdsDefaultValue)
+            setVeterinary(veterinaryDefaultValue)
+          }, [])
+
           // garden
           let gardensOptions = staticData.gardens?.map((item) => { return { value: item.name, label: item.name, item: item } })
 
@@ -472,6 +482,15 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
             </div>
           )
         } else if (editableTitle === 'profession') {
+
+          
+          useEffect(() => {
+            setAgricultureAndGarden(agricultureAndGardenDefaultValue)
+            setGreenhouse(greenhouseDefaultValue)
+            setLivestockAndBirdsProfessions(livestockAndBirdsProfessionsDefaultValue)
+            setVeterinaryProfessions(veterinaryProfessionsDefaultValue)
+          }, [])
+
           // agricultureAndGarden
           let agricultureAndGardenOptions = staticData.agricultureAndGarden?.map((item) => { return { value: item.name, label: item.name, item: item } })
 
@@ -521,20 +540,26 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
 
 
   const setExpertise = () => {
-    createExpertise(gardensValue?.length === 0 ? gardenDefaultValue.map(x => x.item) : gardensValue);
-    createExpertise(farmsValue?.length === 0 ? farmsDefaultValue.map(x => x.item) : farmsValue);
-    createExpertise(earthenGreenhouseValue?.length === 0 ? earthenGreenhouseDefaultValue.map(x => x.item) : earthenGreenhouseValue);
-    createExpertise(hydroponicGreenhouseValue?.length === 0 ? hydroponicGreenhouseDefaultValue.map(x => x.item) : hydroponicGreenhouseValue)
-    createExpertise(livestockAndBirdsValue?.length === 0 ? livestockAndBirdsDefaultValue.map(x => x.item) : livestockAndBirdsValue);
-    createExpertise(veterinaryValue?.length === 0 ? veterinaryDefaultValue.map(x => x.item) : veterinaryValue);
+    createExpertise(gardensValue);
+    createExpertise(farmsValue);
+    createExpertise(earthenGreenhouseValue);
+    createExpertise(hydroponicGreenhouseValue)
+    createExpertise(livestockAndBirdsValue);
+    createExpertise(veterinaryValue);
+    // createExpertise(gardensValue?.length === 0 ? gardenDefaultValue.map(x => x.item) : gardensValue);
+    // createExpertise(farmsValue?.length === 0 ? farmsDefaultValue.map(x => x.item) : farmsValue);
+    // createExpertise(earthenGreenhouseValue?.length === 0 ? earthenGreenhouseDefaultValue.map(x => x.item) : earthenGreenhouseValue);
+    // createExpertise(hydroponicGreenhouseValue?.length === 0 ? hydroponicGreenhouseDefaultValue.map(x => x.item) : hydroponicGreenhouseValue)
+    // createExpertise(livestockAndBirdsValue?.length === 0 ? livestockAndBirdsDefaultValue.map(x => x.item) : livestockAndBirdsValue);
+    // createExpertise(veterinaryValue?.length === 0 ? veterinaryDefaultValue.map(x => x.item) : veterinaryValue);
     setEdited({ [editableTitle]: expertiseEditedValue })
   }
 
   const setProfessions = () => {
-    createProfessions(agricultureAndGardenValue?.length === 0 ? agricultureAndGardenDefaultValue.map(x => x.item) : agricultureAndGardenValue);
-    createProfessions(greenhouseValue?.length === 0 ? greenhouseDefaultValue.map(x => x.item) : greenhouseValue);
-    createProfessions(livestockAndBirdsProfessionsValue?.length === 0 ? livestockAndBirdsProfessionsDefaultValue.map(x => x.item) : livestockAndBirdsProfessionsValue);
-    createProfessions(veterinaryProfessionsValue?.length === 0 ? veterinaryProfessionsDefaultValue.map(x => x.item) : veterinaryProfessionsValue);
+    createProfessions(agricultureAndGardenValue);
+    createProfessions(greenhouseValue);
+    createProfessions(livestockAndBirdsProfessionsValue);
+    createProfessions(veterinaryProfessionsValue);
     setEdited({ [editableTitle]: professionsEditedValue })
   }
 
