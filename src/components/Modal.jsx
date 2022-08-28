@@ -12,7 +12,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
 
   // jobField
   let jobFieldDefaultValue
-  if (editableTitle ===  'jobFiled') jobFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
+  if (editableTitle === 'jobFiled') jobFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
 
   const setJobField = (e) => {
     setEditedValue(e?.length === 0 ? jobFieldDefaultValue : e.map((item) => item.value))
@@ -112,10 +112,10 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let veterinaryProfessionsDefaultValue
 
   if (editableTitle === 'profession') {
-   agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.parentName === 'زراعت و باغ') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-   greenhouseDefaultValue = editableValue.map((item) => { if (item.parentName === 'گلخانه') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-   livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'حرفه های دام و طیور') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)  
-   veterinaryProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'دامپزشکی') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)  
+    agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.parentName === 'زراعت و باغ') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    greenhouseDefaultValue = editableValue.map((item) => { if (item.parentName === 'گلخانه') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'حرفه های دام و طیور') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    veterinaryProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'دامپزشکی') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
   const setAgricultureAndGarden = (e) => {
     let items = e.map(e => e.item)
@@ -155,25 +155,29 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     })
   }
 
-    // consultingField
-    let consultingFieldDefaultValue
-    if (editableTitle === 'consultingField') consultingFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
+  // consultingField
+  let consultingFieldDefaultValue
+  if (editableTitle === 'consultingField') consultingFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
 
-    const setConsultingField = (e) => {
-      console.log("e", e)
-      setEditedValue(e?.length === 0 ? consultingFieldDefaultValue : e.map((item) => item.value))
-    }
+  const setConsultingField = (e) => {
+    console.log("e", e)
+    setEditedValue(e?.length === 0 ? consultingFieldDefaultValue : e.map((item) => item.value))
+  }
 
 
   // inputs, radioButtons and selections
   const onChangeHandler = (e) => {
-    setEditedValue(e.target.value)
+    if (e.target.type === 'file') {
+      setEditedValue(e.target.files[0])
+    } else {
+      setEditedValue(e.target.value)
+    }
   }
 
-    // true false radioButtons 
-    const trueFalseOnChangeHandler = (e) => {
-      setEditedValue(e)
-    }
+  // true false radioButtons 
+  const trueFalseOnChangeHandler = (e) => {
+    setEditedValue(e)
+  }
 
   // for communicationWays
   const setCommunicationWays = (e) => {
@@ -247,17 +251,24 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               <option value="سایر">سایر</option>
             </select>
           )
-        } 
+        }
         else if (editableTitle === 'major') {
           return (
             <select value={editedValue} onChange={onChangeHandler}>
               <option value disabled>انتخاب کنید</option>
               {staticData.majors.map(major => <option value={major}>{major}</option>)}
             </select>
-            )
-        } else if (editableTitle === 'avatarUrl') {
+          )
+        } else if (editableTitle === 'avatarUrl' || editableTitle === 'studentCardUrl' || editableTitle === 'resumeUrl' || editableTitle === 'lastDegreeUrl' || editableTitle === 'engineeringSystemCardUrl')
+        {
           return (
-            <img className={styles.avatar} src={editableValue}/>
+            <div className={styles.imageSelectorContainer}>
+              <img className={styles.avatar} src={editableValue} />
+              <label for="file-upload" className={styles.fileUpload}>
+                آپلود فایل جدید
+              </label>
+              <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler}/>
+            </div>
           )
         }
         else {
@@ -265,52 +276,52 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
         }
       case 'number':
         return <input className={styles.centerInput} type='number' defaultValue={editableValue} onChange={onChangeHandler} />
-      case 'boolean': 
-      if (editableTitle === 'farmingStatus') {
-        return (
-          <div className={styles.radioButtonContainer}>
-            <div>
-              <input type="radio" value="true" name="farmingStatus" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+      case 'boolean':
+        if (editableTitle === 'farmingStatus') {
+          return (
+            <div className={styles.radioButtonContainer}>
+              <div>
+                <input type="radio" value="true" name="farmingStatus" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+              </div>
+              <div>
+                <input type="radio" value="" name="farmingStatus" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+              </div>
             </div>
-            <div>
-              <input type="radio" value="" name="farmingStatus" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+          )
+        } else if (editableTitle == 'doesCollaborate') {
+          return (
+            <div className={styles.radioButtonContainer}>
+              <div>
+                <input type="radio" value="true" name="doesCollaborate" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+              </div>
+              <div>
+                <input type="radio" value="" name="doesCollaborate" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+              </div>
             </div>
-          </div>
-        )      
-      } else if (editableTitle == 'doesCollaborate') {
-        return (
-          <div className={styles.radioButtonContainer}>
-            <div>
-              <input type="radio" value="true" name="doesCollaborate" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+          )
+        } else if (editableTitle === 'hasVehicle') {
+          return (
+            <div className={styles.radioButtonContainer}>
+              <div>
+                <input type="radio" value="true" name="hasVehicle" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+              </div>
+              <div>
+                <input type="radio" value="" name="hasVehicle" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+              </div>
             </div>
-            <div>
-              <input type="radio" value="" name="doesCollaborate" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+          )
+        } else if (editableTitle === 'isMemberOfAgriculturalOrganization') {
+          return (
+            <div className={styles.radioButtonContainer}>
+              <div>
+                <input type="radio" value="true" name="isMemberOfAgriculturalOrganization" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+              </div>
+              <div>
+                <input type="radio" value="" name="isMemberOfAgriculturalOrganization" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+              </div>
             </div>
-          </div>
-        )
-      } else if (editableTitle === 'hasVehicle') {
-        return (
-          <div className={styles.radioButtonContainer}>
-            <div>
-              <input type="radio" value="true" name="hasVehicle" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
-            </div>
-            <div>
-              <input type="radio" value="" name="hasVehicle" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
-            </div>
-          </div>
-        )
-      } else if (editableTitle === 'isMemberOfAgriculturalOrganization') {
-      return (
-        <div className={styles.radioButtonContainer}>
-          <div>
-            <input type="radio" value="true" name="isMemberOfAgriculturalOrganization" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
-          </div>
-          <div>
-            <input type="radio" value="" name="isMemberOfAgriculturalOrganization" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
-          </div>
-        </div>
-      )
-    }
+          )
+        }
       case 'object':
         if (editableTitle === 'communicationWays') {
           return (
@@ -483,7 +494,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           )
         } else if (editableTitle === 'profession') {
 
-          
+
           useEffect(() => {
             setAgricultureAndGarden(agricultureAndGardenDefaultValue)
             setGreenhouse(greenhouseDefaultValue)
@@ -531,8 +542,8 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           let consultingFieldOptions = staticData.consultingField?.map((item) => { return { value: item, label: item } })
           return (<Select className={styles.multiSelect} name='consultingField' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldOptions} isSearchable={true} defaultValue={consultingFieldDefaultValue} onChange={setConsultingField} />)
         }
-        // select option
-        // multi select
+      // select option
+      // multi select
       default:
         break
     }
@@ -592,8 +603,61 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                   setExpertise()
                 } else if (editableTitle === 'profession') {
                   setProfessions()
-                }
-                else {
+                } else if (editableTitle === 'avatarUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', editedValue)
+                  formData.append('resume', null)
+                  formData.append('lastDegree', null)
+                  formData.append('cover', null)
+                  formData.append('studentCard', null)
+                  formData.append('engineeringSystemCard', null)
+                  setEdited(formData)
+                } else if (editableTitle === 'resumeUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', null)
+                  formData.append('resume', editedValue)
+                  formData.append('lastDegree', null)
+                  formData.append('cover', null)
+                  formData.append('studentCard', null)
+                  formData.append('engineeringSystemCard', null)
+                  setEdited(formData)
+                }else if (editableTitle === 'lastDegreeUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', null)
+                  formData.append('resume', null)
+                  formData.append('lastDegree', editedValue)
+                  formData.append('cover', null)
+                  formData.append('studentCard', null)
+                  formData.append('engineeringSystemCard', null)
+                  setEdited(formData)
+                } else if (editableTitle === 'coverUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', null)
+                  formData.append('resume', null)
+                  formData.append('lastDegree', null)
+                  formData.append('cover', editedValue)
+                  formData.append('studentCard', null)
+                  formData.append('engineeringSystemCard', null)
+                  setEdited(formData)
+                } else if (editableTitle === 'studentCardUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', null)
+                  formData.append('resume', null)
+                  formData.append('lastDegree', null)
+                  formData.append('cover', null)
+                  formData.append('studentCard', editedValue)
+                  formData.append('engineeringSystemCard', null)
+                  setEdited(formData)
+                } else if (editableTitle === 'engineeringSystemCardUrl') {
+                  let formData = new FormData()
+                  formData.append('avatar', null)
+                  formData.append('resume', null)
+                  formData.append('lastDegree', null)
+                  formData.append('cover', null)
+                  formData.append('studentCard', null)
+                  formData.append('engineeringSystemCard', editedValue)
+                  setEdited(formData)
+                } else {
                   setEdited({ [editableTitle]: editedValue })
                 }
                 setModal(null)

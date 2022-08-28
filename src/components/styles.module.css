@@ -238,4 +238,25 @@ align-items: center;
     display: flex;
     width: 300px;
     height: 300px;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+  }
+
+  .imageSelectorContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .inputFile{
+    display: none;
+  }
+
+  .fileUpload{
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
   }
