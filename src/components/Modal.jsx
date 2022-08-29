@@ -553,8 +553,33 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                 <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler}/>
               </div>
             )
+          } else if (editableTitle === 'hasVehicle') {
+            return (
+              <div className={styles.radioButtonContainer}>
+                <div>
+                  <input type="radio" value="true" name="hasVehicle" defaultChecked={editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />بله
+                </div>
+                <div>
+                  <input type="radio" value="" name="hasVehicle" defaultChecked={!editedValue} onChange={(e) => trueFalseOnChangeHandler(Boolean(e.target.value))} />خیر
+                </div>
+              </div>
+            )
+          } else if(editableTitle === 'workOrganizationType') {
+            return (
+              <select value={editedValue} onChange={onChangeHandler}>
+                <option value disabled>انتخاب کنید</option>
+                <option value="جهاد کشاورزی">جهاد کشاورزی</option>
+                <option value="دانشگاه">دانشگاه</option>
+                <option value="مرکز تحقیقات کشاورزی">مرکز  تحقیقات کشاورزی</option>
+                <option value="سایر ارگان های دولتی">سایر ارگان های دولتی</option>
+                <option value="شرکت خصوصی">شرکت خصوصی</option>
+                <option value="شغل آزاد">شغل آزاد</option>
+                <option value="سایر">سایر</option>
+              </select>
+            )
+          } else {
+            return <input className={styles.centerInput} type='text' defaultValue={editableValue} onChange={onChangeHandler} />
           }
-          return <input className={styles.centerInput} type='text' defaultValue={editableValue} onChange={onChangeHandler} />
         }
       // select option
       // multi select
