@@ -11,6 +11,7 @@ export const EditorContainer = ({ toEdit, setEdited, setModal, staticData }) => 
 
   return (
     <div>
+      {console.log("editorman is here")}
     {isOpen && <Modal setModal={setModal} setIsOpen={setIsOpen} setEdited={setEdited} editableTitle={element[0]} editableValue={element[1]} staticData={staticData}/>}
     </div>
  )
