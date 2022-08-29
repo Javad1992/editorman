@@ -213,7 +213,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   // show related component
   function returnRelatedComponent() {
     switch (typeof editableValue) {
-      case 'string':
+      case 'string' :
         if (editableTitle === 'expectedPage') {
           return (
             <div className={styles.radioButtonContainer}>
@@ -538,9 +538,12 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               </div>
             </div>
           )
-        } else {
+        }  
+        else if (editableTitle === 'consultingField'){
           let consultingFieldOptions = staticData.consultingField?.map((item) => { return { value: item, label: item } })
           return (<Select className={styles.multiSelect} name='consultingField' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldOptions} isSearchable={true} defaultValue={consultingFieldDefaultValue} onChange={setConsultingField} />)
+        } else {
+          return <input className={styles.centerInput} type='text' defaultValue={editableValue} onChange={onChangeHandler} />
         }
       // select option
       // multi select
