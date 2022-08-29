@@ -543,6 +543,17 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           let consultingFieldOptions = staticData.consultingField?.map((item) => { return { value: item, label: item } })
           return (<Select className={styles.multiSelect} name='consultingField' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldOptions} isSearchable={true} defaultValue={consultingFieldDefaultValue} onChange={setConsultingField} />)
         } else {
+          if (editableTitle === 'avatarUrl' || editableTitle === 'studentCardUrl' || editableTitle === 'resumeUrl' || editableTitle === 'lastDegreeUrl' || editableTitle === 'engineeringSystemCardUrl') {
+            return (
+              <div className={styles.imageSelectorContainer}>
+                <img className={styles.avatar} src={editableValue} />
+                <label for="file-upload" className={styles.fileUpload}>
+                  آپلود فایل جدید
+                </label>
+                <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler}/>
+              </div>
+            )
+          }
           return <input className={styles.centerInput} type='text' defaultValue={editableValue} onChange={onChangeHandler} />
         }
       // select option
