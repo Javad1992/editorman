@@ -1,26 +1,41 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import styles from './styles.module.css'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { RiCloseLine } from "react-icons/ri";
 import { useEffect } from 'react';
+import DatePicker from './DatePicker';
 
-const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, staticData }) => {
+const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, staticData, forWhat }) => {
 
+  // configs
   const animatedComponents = makeAnimated();
+
+  // setting editted values by user
+  // expert
   const [editedValue, setEditedValue] = useState(editableValue)
+  // questionnaire
+  const [queEditedValue, setQueEditedValue] = useState([])
+
+  // different type of questionnaire questions
+  const EDIT_TEXT_TEXT = 0
+  const EDIT_TEXT_NUMBER = 1
+  const DATE = 2
+  const RADIOBUTTON = 3
+  const SELECTION = 4
+  const AREA = 7
+  const WEIGHT = 8
+  //
 
   // jobField
   let jobFieldDefaultValue
   if (editableTitle === 'jobFiled') jobFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
-
   const setJobField = (e) => {
     setEditedValue(e?.length === 0 ? jobFieldDefaultValue : e.map((item) => item.value))
   }
 
   // expertise
   let expertiseEditedValue = []
-
   const [gardensValue, setGardensValue] = useState([])
   const [farmsValue, setFarmsValue] = useState([])
   const [earthenGreenhouseValue, setEarthenGreenhouseValue] = useState([])
@@ -174,6 +189,19 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     }
   }
 
+  // for Questionnaires
+  const queOnChangeHandler = (e, id) => {
+    let qev = queEditedValue.filter(item => id !== item.id)
+    qev.push({ answer: e.target.value, id: id })
+    setQueEditedValue(qev)
+  }
+
+  // const dateChangeHandler = (id, date) => {
+  //   let qev = queEditedValue.filter(item => id !== item.id)
+  //   qev.push({ answer: date, id: id })
+  //   setQueEditedValue(qev)
+  // }
+
   // true false radioButtons 
   const trueFalseOnChangeHandler = (e) => {
     setEditedValue(e)
@@ -195,7 +223,6 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
       ])
     } else {
       const element = staticData.communicationWays.find(x => x.englishName === e.target.name)
-      console.log("element: ", element)
       var newElement = {
         title: element.englishName,
         value: e.target.value,
@@ -211,9 +238,10 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
 
 
   // show related component
-  function returnRelatedComponent() {
+  function returnRelatedComponentForExperts() {
+
     switch (typeof editableValue) {
-      case 'string' :
+      case 'string':
         if (editableTitle === 'expectedPage') {
           return (
             <div className={styles.radioButtonContainer}>
@@ -259,15 +287,14 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               {staticData.majors.map(major => <option value={major}>{major}</option>)}
             </select>
           )
-        } else if (editableTitle === 'avatarUrl' || editableTitle === 'studentCardUrl' || editableTitle === 'resumeUrl' || editableTitle === 'lastDegreeUrl' || editableTitle === 'engineeringSystemCardUrl')
-        {
+        } else if (editableTitle === 'avatarUrl' || editableTitle === 'studentCardUrl' || editableTitle === 'resumeUrl' || editableTitle === 'lastDegreeUrl' || editableTitle === 'engineeringSystemCardUrl') {
           return (
             <div className={styles.imageSelectorContainer}>
               <img className={styles.avatar} src={editableValue} />
               <label for="file-upload" className={styles.fileUpload}>
                 آپلود فایل جدید
               </label>
-              <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler}/>
+              <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler} />
             </div>
           )
         }
@@ -538,8 +565,8 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               </div>
             </div>
           )
-        }  
-        else if (editableTitle === 'consultingField'){
+        }
+        else if (editableTitle === 'consultingField') {
           let consultingFieldOptions = staticData.consultingField?.map((item) => { return { value: item, label: item } })
           return (<Select className={styles.multiSelect} name='consultingField' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldOptions} isSearchable={true} defaultValue={consultingFieldDefaultValue} onChange={setConsultingField} />)
         } else {
@@ -550,7 +577,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                 <label for="file-upload" className={styles.fileUpload}>
                   آپلود فایل جدید
                 </label>
-                <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler}/>
+                <input className={styles.inputFile} id="file-upload" type="file" accept=".jpg,.jpeg,.png" multiple={false} onChange={onChangeHandler} />
               </div>
             )
           } else if (editableTitle === 'hasVehicle') {
@@ -564,7 +591,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                 </div>
               </div>
             )
-          } else if(editableTitle === 'workOrganizationType') {
+          } else if (editableTitle === 'workOrganizationType') {
             return (
               <select value={editedValue} onChange={onChangeHandler}>
                 <option value disabled>انتخاب کنید</option>
@@ -586,6 +613,75 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
       default:
         break
     }
+  }
+
+  function returnRelatedComponentForQuestionnaires() {
+    let elemetns = editableValue.map((ev, index) => {
+      switch (ev.type) {
+        case EDIT_TEXT_TEXT:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <input className={styles.centerInput} type='text' defaultValue={ev.answer} onChange={(event) => queOnChangeHandler(event, ev.id)} />
+            </Fragment>
+          )
+        case EDIT_TEXT_NUMBER:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <input className={styles.centerInput} type='number' defaultValue={ev.answer} onChange={(event) => queOnChangeHandler(event, ev.id)} />
+            </Fragment>
+          )
+        case DATE:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <DatePicker ev={ev} queEditedValue={queEditedValue} setQueEditedValue={setQueEditedValue}/>
+            </Fragment>
+          )
+        case RADIOBUTTON:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <div className={styles.radioButtonContainer}>
+                <div>
+                  <input type="radio" value={ev.list[0]} name={ev.id} defaultChecked={ev.answer === ev.list[0]} onChange={(event) => queOnChangeHandler(event, ev.id)} />{ev.list[0]}
+                </div>
+                <div>
+                  <input type="radio" value={ev.list[1]} name={ev.id} defaultChecked={ev.answer === ev.list[1]} onChange={(event) => queOnChangeHandler(event, ev.id)} />{ev.list[1]}
+                </div>
+              </div>
+            </Fragment>
+          )
+        case SELECTION:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <select defaultValue={ev.answer} onChange={(event) => queOnChangeHandler(event, ev.id)}>
+                {ev.list.map((opt, index) => <option key={index} value={opt}>{opt}</option>)}
+              </select>
+            </Fragment>
+          )
+        case AREA:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <input className={styles.centerInput} type='text' defaultValue={ev.answer} onChange={(event) => queOnChangeHandler(event, ev.id)} />
+            </Fragment>
+          )
+        case WEIGHT:
+          return (
+            <Fragment>
+              <p>{ev.text}</p>
+              <input className={styles.centerInput} type='text' defaultValue={ev.answer} onChange={(event) => queOnChangeHandler(event, ev.id)} />
+            </Fragment>
+          )
+        default:
+          return alert(ev.type)
+      }
+    })
+
+    return elemetns;
   }
 
 
@@ -633,7 +729,8 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           </button>
           <div className={styles.modalContent}>
             <label>لطفا مقدار جدید را وارد کنید</label>
-            {returnRelatedComponent()}
+            {console.log("forWhat", forWhat)}
+            {forWhat === "EXP" ? returnRelatedComponentForExperts() : returnRelatedComponentForQuestionnaires()}
           </div>
           <div className={styles.modalActions}>
             <div className={styles.actionsContainer}>
@@ -660,7 +757,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                   formData.append('studentCard', null)
                   formData.append('engineeringSystemCard', null)
                   setEdited(formData)
-                }else if (editableTitle === 'lastDegreeUrl') {
+                } else if (editableTitle === 'lastDegreeUrl') {
                   let formData = new FormData()
                   formData.append('avatar', null)
                   formData.append('resume', null)
@@ -696,7 +793,14 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                   formData.append('studentCard', null)
                   formData.append('engineeringSystemCard', editedValue)
                   setEdited(formData)
-                } else {
+                } else if (forWhat === "QUE") {
+                  setEdited({
+                    data: {
+                      [editableTitle]: queEditedValue
+                    }
+                  })
+                }
+                else {
                   setEdited({ [editableTitle]: editedValue })
                 }
                 setModal(null)
