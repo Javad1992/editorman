@@ -50,7 +50,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let livestockAndBirdsDefaultValue
   let veterinaryDefaultValue
 
-  if (editableTitle === 'expertises') {
+  if (editableTitle === 'expertise') {
     gardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     farmsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_FARMS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     earthenGreenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_EARTHEN_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
@@ -58,6 +58,9 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     livestockAndBirdsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     veterinaryDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
+
+
+  console.log('farmsDefaultValue', farmsDefaultValue);
 
 
   const setGardens = (e) => {
@@ -129,7 +132,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let veterinaryProfessionsDefaultValue
   let comprehensiveProfessionsDefaultValue
 
-  if (editableTitle === 'professions') {
+  if (editableTitle === 'profession') {
     agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_FARMS_AND_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     greenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
