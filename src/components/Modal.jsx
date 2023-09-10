@@ -27,15 +27,64 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   const WEIGHT = 8
   //
 
-  // jobField
-  let jobFieldDefaultValue
-  if (editableTitle === 'jobFiled') jobFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
-  const setJobField = (e) => {
-    setEditedValue(e?.length === 0 ? jobFieldDefaultValue : e.map((item) => item.value))
+  // activityFields
+  let activityFieldsEditedValue = []
+  const [activityFieldsValue, setActivityFieldsValue] = useState([])
+
+  let activityFieldsDefaultValue
+
+  if (editableTitle === 'activityFields') {
+    activityFieldsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXECUTIVE_SKILLS_ACTIVITY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
 
-  // expertise
-  let expertiseEditedValue = []
+  const setActivities = (e) => {
+    let items = e.map(e => e.item)
+    setActivityFieldsValue(
+      items
+    )
+  }
+
+  const createActivities = (fieldName) => {
+    fieldName?.length > 0 && fieldName?.map((item) => {
+      activityFieldsEditedValue?.push({
+        categoryEN: item?.categoryEN,
+        categoryFA: item?.categoryFA,
+        id: item?.id,
+        name: item?.name,
+      })
+    })
+  }
+
+    // consultingFields
+    let consultingFieldsEditedValue = []
+    const [consultingFieldsValue, setConsultingFieldsValue] = useState([])
+  
+    let consultingFieldsDefaultValue
+  
+    if (editableTitle === 'consultingFields') {
+      consultingFieldsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXECUTIVE_SKILLS_CONSULTING') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    }
+  
+    const setConsultings = (e) => {
+      let items = e.map(e => e.item)
+      setConsultingFieldsValue(
+        items
+      )
+    }
+  
+    const createConsultings = (fieldName) => {
+      fieldName?.length > 0 && fieldName?.map((item) => {
+        consultingFieldsEditedValue?.push({
+          categoryEN: item?.categoryEN,
+          categoryFA: item?.categoryFA,
+          id: item?.id,
+          name: item?.name,
+        })
+      })
+    }
+
+  // expertises
+  let expertisesEditedValue = []
   const [gardensValue, setGardensValue] = useState([])
   const [farmsValue, setFarmsValue] = useState([])
   const [earthenGreenhouseValue, setEarthenGreenhouseValue] = useState([])
@@ -50,7 +99,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let livestockAndBirdsDefaultValue
   let veterinaryDefaultValue
 
-  if (editableTitle === 'expertise') {
+  if (editableTitle === 'expertises') {
     gardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     farmsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_FARMS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     earthenGreenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_EARTHEN_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
@@ -58,10 +107,6 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     livestockAndBirdsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     veterinaryDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
-
-
-  console.log('farmsDefaultValue', farmsDefaultValue);
-
 
   const setGardens = (e) => {
     let items = e.map(e => e.item)
@@ -105,9 +150,9 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     )
   }
 
-  const createExpertise = (fieldName) => {
+  const createExpertises = (fieldName) => {
     fieldName?.length > 0 && fieldName?.map((item) => {
-      expertiseEditedValue?.push({
+      expertisesEditedValue?.push({
         categoryEN: item?.categoryEN,
         categoryFA: item?.categoryFA,
         id: item?.id,
@@ -132,7 +177,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let veterinaryProfessionsDefaultValue
   let comprehensiveProfessionsDefaultValue
 
-  if (editableTitle === 'profession') {
+  if (editableTitle === 'professions') {
     agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_FARMS_AND_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     greenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
     livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
@@ -184,16 +229,6 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
       })
     })
   }
-
-  // consultingField
-  let consultingFieldDefaultValue
-  if (editableTitle === 'consultingField') consultingFieldDefaultValue = editableValue.map((item) => { return { value: item, label: item } }).filter(Boolean)
-
-  const setConsultingField = (e) => {
-    console.log("e", e)
-    setEditedValue(e?.length === 0 ? consultingFieldDefaultValue : e.map((item) => item.value))
-  }
-
 
   // inputs, radioButtons and selections
   const onChangeHandler = (e) => {
@@ -466,12 +501,25 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               </div>
             </form>
           )
-        } else if (editableTitle === 'jobFiled') {
+        } else if (editableTitle === 'activityFields') {
+          useEffect(() => {
+            setActivities(activityFieldsDefaultValue)
+          }, [])
 
-          let jobFiledOptions = staticData.jobFiled?.map((item) => { return { value: item, label: item } })
-          return (<Select className={styles.multiSelect} name='jobFiled' closeMenuOnSelect={true} components={animatedComponents} isMulti options={jobFiledOptions} isSearchable={true} defaultValue={jobFieldDefaultValue} onChange={setJobField} />)
+          let activityFieldsOptions = staticData?.EXECUTIVE_SKILLS?.map((item) => { if (item.categoryEN === 'EXECUTIVE_SKILLS_ACTIVITY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
-        } else if (editableTitle === 'expertise') {
+          return (<Select className={styles.multiSelect} name='activityFields' closeMenuOnSelect={true} components={animatedComponents} isMulti options={activityFieldsOptions} isSearchable={true} defaultValue={activityFieldsDefaultValue} onChange={setActivities} />)
+
+        } else if (editableTitle === 'consultingFields') {
+          useEffect(() => {
+            setConsultings(consultingFieldsDefaultValue)
+          }, [])
+
+          let consultingFieldsOptions = staticData?.EXECUTIVE_SKILLS?.map((item) => { if (item.categoryEN === 'EXECUTIVE_SKILLS_CONSULTING') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+
+          return (<Select className={styles.multiSelect} name='consultingFields' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldsOptions} isSearchable={true} defaultValue={consultingFieldsDefaultValue} onChange={setConsultings} />)
+
+        } else if (editableTitle === 'expertises') {
 
           useEffect(() => {
             setGardens(gardenDefaultValue)
@@ -483,22 +531,22 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           }, [])
 
           // garden
-          let gardensOptions = staticData.gardens?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let gardensOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // farm
-          let farmsOptions = staticData.farms?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let farmsOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_FARMS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // earthenGreenhouse
-          let earthenGreenhouseOptions = staticData.earthenGreenhouse?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let earthenGreenhouseOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_EARTHEN_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // hydroponicGreenhouse
-          let hydroponicGreenhouseOptions = staticData.hydroponicGreenhouse?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let hydroponicGreenhouseOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_HYDROPONIC_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // livestockAndBirds
-          let livestockAndBirdsOptions = staticData.livestockAndBirds?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let livestockAndBirdsOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // veterinary
-          let veterinaryOptions = staticData.veterinary?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let veterinaryOptions = staticData?.EXPERTISES?.map((item) => { if (item.categoryEN === 'EXPERTISES_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           return (
             <div className={styles.element}>
@@ -534,8 +582,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
               </div>
             </div>
           )
-        } else if (editableTitle === 'profession') {
-
+        } else if (editableTitle === 'professions') {
 
           useEffect(() => {
             setAgricultureAndGarden(agricultureAndGardenDefaultValue)
@@ -546,16 +593,19 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           }, [])
 
           // agricultureAndGarden
-          let agricultureAndGardenOptions = staticData.agricultureAndGarden?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let agricultureAndGardenOptions = staticData?.PROFESSIONS?.map((item) => { if (item.categoryEN === 'PROFESSIONS_FARMS_AND_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // greenhouse
-          let greenhouseOptions = staticData.greenhouse?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let greenhouseOptions = staticData?.PROFESSIONS?.map((item) => { if (item.categoryEN === 'PROFESSIONS_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // livestockAndBirds
-          let livestockAndBirdsOptions = staticData.livestockAndBirdsProfessions?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let livestockAndBirdsOptions = staticData?.PROFESSIONS?.map((item) => { if (item.categoryEN === 'PROFESSIONS_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           // veterinaryProfessions
-          let veterinaryProfessionsOptions = staticData.veterinaryOptions?.map((item) => { return { value: item.name, label: item.name, item: item } })
+          let veterinaryProfessionsOptions = staticData?.PROFESSIONS?.map((item) => { if (item.categoryEN === 'PROFESSIONS_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+
+          //comprehensiveProfessions
+          let comprehensiveProfessionsOptions = staticData?.PROFESSIONS?.map((item) => { if (item.categoryEN === 'PROFESSIONS_COMPREHENSIVE_PROFESSIONS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
 
           return (
             <div className={styles.element}>
@@ -579,12 +629,14 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
                   <Select className={styles.multiSelect} name='veterinaryProfessions' closeMenuOnSelect={true} components={animatedComponents} isMulti options={veterinaryProfessionsOptions} isSearchable={true} defaultValue={veterinaryProfessionsDefaultValue} onChange={setVeterinaryProfessions} />
                 </div>
               </div>
+              <div className={styles.row}>
+                <div className={styles.element}>
+                  <label>حرف جامع</label>
+                  <Select className={styles.multiSelect} name='comprehensiveProfessions' closeMenuOnSelect={true} components={animatedComponents} isMulti options={comprehensiveProfessionsOptions} isSearchable={true} defaultValue={comprehensiveProfessionsDefaultValue} onChange={setComprehensiveProfessions} />
+                </div>
+              </div>
             </div>
           )
-        }
-        else if (editableTitle === 'consultingField') {
-          let consultingFieldOptions = staticData.consultingField?.map((item) => { return { value: item, label: item } })
-          return (<Select className={styles.multiSelect} name='consultingField' closeMenuOnSelect={true} components={animatedComponents} isMulti options={consultingFieldOptions} isSearchable={true} defaultValue={consultingFieldDefaultValue} onChange={setConsultingField} />)
         } else {
           if (editableTitle === 'avatarUrl' || editableTitle === 'studentCardUrl' || editableTitle === 'resumeUrl' || editableTitle === 'lastDegreeUrl' || editableTitle === 'engineeringSystemCardUrl') {
             return (
@@ -700,21 +752,24 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     return elemetns;
   }
 
+  const setActivityFields = () => {
+    createActivities(activityFieldsValue);
+    setEdited({ [editableTitle]: activityFieldsEditedValue })
+  }
 
-  const setExpertise = () => {
-    createExpertise(gardensValue);
-    createExpertise(farmsValue);
-    createExpertise(earthenGreenhouseValue);
-    createExpertise(hydroponicGreenhouseValue)
-    createExpertise(livestockAndBirdsValue);
-    createExpertise(veterinaryValue);
-    // createExpertise(gardensValue?.length === 0 ? gardenDefaultValue.map(x => x.item) : gardensValue);
-    // createExpertise(farmsValue?.length === 0 ? farmsDefaultValue.map(x => x.item) : farmsValue);
-    // createExpertise(earthenGreenhouseValue?.length === 0 ? earthenGreenhouseDefaultValue.map(x => x.item) : earthenGreenhouseValue);
-    // createExpertise(hydroponicGreenhouseValue?.length === 0 ? hydroponicGreenhouseDefaultValue.map(x => x.item) : hydroponicGreenhouseValue)
-    // createExpertise(livestockAndBirdsValue?.length === 0 ? livestockAndBirdsDefaultValue.map(x => x.item) : livestockAndBirdsValue);
-    // createExpertise(veterinaryValue?.length === 0 ? veterinaryDefaultValue.map(x => x.item) : veterinaryValue);
-    setEdited({ [editableTitle]: expertiseEditedValue })
+  const setConsultingFields = () => {
+    createConsultings(consultingFieldsValue);
+    setEdited({ [editableTitle]: consultingFieldsEditedValue })
+  }
+
+  const setExpertises = () => {
+    createExpertises(gardensValue);
+    createExpertises(farmsValue);
+    createExpertises(earthenGreenhouseValue);
+    createExpertises(hydroponicGreenhouseValue)
+    createExpertises(livestockAndBirdsValue);
+    createExpertises(veterinaryValue);
+    setEdited({ [editableTitle]: expertisesEditedValue })
   }
 
   const setProfessions = () => {
@@ -746,16 +801,19 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           </button>
           <div className={styles.modalContent}>
             <label>لطفا مقدار جدید را وارد کنید</label>
-            {console.log("forWhat", forWhat)}
             {forWhat === "EXP" ? returnRelatedComponentForExperts() : returnRelatedComponentForQuestionnaires()}
           </div>
           <div className={styles.modalActions}>
             <div className={styles.actionsContainer}>
               <button className={styles.saveBtn} onClick={() => {
-                if (editableTitle === 'expertise') {
-                  setExpertise()
-                } else if (editableTitle === 'profession') {
+                if (editableTitle === 'expertises') {
+                  setExpertises()
+                } else if (editableTitle === 'professions') {
                   setProfessions()
+                } else if (editableTitle === 'activityFields') {
+                  setActivityFields()
+                } else if (editableTitle === 'consultingFields') {
+                  setConsultingFields()
                 } else if (editableTitle === 'avatarUrl') {
                   let formData = new FormData()
                   formData.append('avatar', editedValue)
