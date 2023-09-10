@@ -50,13 +50,13 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   let livestockAndBirdsDefaultValue
   let veterinaryDefaultValue
 
-  if (editableTitle === 'expertise') {
-    gardenDefaultValue = editableValue.map((item) => { if (item.parentName === 'باغات') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    farmsDefaultValue = editableValue.map((item) => { if (item.parentName === 'مزارع') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    earthenGreenhouseDefaultValue = editableValue.map((item) => { if (item.parentName === 'گلخانه خاکی') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    hydroponicGreenhouseDefaultValue = editableValue.map((item) => { if (item.parentName === 'گلخانه هیدروپونیک') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    livestockAndBirdsDefaultValue = editableValue.map((item) => { if (item.parentName === 'دام و طیور') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    veterinaryDefaultValue = editableValue.map((item) => { if (item.parentName === 'دامپزشکی') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+  if (editableTitle === 'expertises') {
+    gardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    farmsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_FARMS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    earthenGreenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_EARTHEN_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    hydroponicGreenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_HYDROPONIC_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    livestockAndBirdsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    veterinaryDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'EXPERTISES_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
 
 
@@ -105,7 +105,8 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   const createExpertise = (fieldName) => {
     fieldName?.length > 0 && fieldName?.map((item) => {
       expertiseEditedValue?.push({
-        parentName: item?.parentName,
+        categoryEN: item?.categoryEN,
+        categoryFA: item?.categoryFA,
         id: item?.id,
         name: item?.name,
       })
@@ -119,18 +120,21 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
   const [greenhouseValue, setgreenhouseValue] = useState([])
   const [livestockAndBirdsProfessionsValue, setLivestockAndBirdsProfessionsValue] = useState([])
   const [veterinaryProfessionsValue, setVeterinaryProfessionsValue] = useState([])
+  const [comprehensiveProfessionsValue, setComprehensiveProfessionsValue] = useState([])
 
 
   let agricultureAndGardenDefaultValue
   let greenhouseDefaultValue
   let livestockAndBirdsProfessionsDefaultValue
   let veterinaryProfessionsDefaultValue
+  let comprehensiveProfessionsDefaultValue
 
-  if (editableTitle === 'profession') {
-    agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.parentName === 'زراعت و باغ') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    greenhouseDefaultValue = editableValue.map((item) => { if (item.parentName === 'گلخانه') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'حرفه های دام و طیور') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
-    veterinaryProfessionsDefaultValue = editableValue.map((item) => { if (item.parentName === 'دامپزشکی') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+  if (editableTitle === 'professions') {
+    agricultureAndGardenDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_FARMS_AND_GARDENS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    greenhouseDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_GREENHOUSE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    livestockAndBirdsProfessionsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_LIVESTOCK_POULTRY') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    veterinaryProfessionsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_VETERINARY_MEDICINE') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
+    comprehensiveProfessionsDefaultValue = editableValue.map((item) => { if (item.categoryEN === 'PROFESSIONS_COMPREHENSIVE_PROFESSIONS') { return { value: item.name, label: item.name, item: item } } }).filter(Boolean)
   }
   const setAgricultureAndGarden = (e) => {
     let items = e.map(e => e.item)
@@ -160,10 +164,18 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     )
   }
 
+  const setComprehensiveProfessions = (e) => {
+    let items = e.map(e => e.item)
+    setComprehensiveProfessionsValue(
+      items
+    )
+  }
+
   const createProfessions = (fieldName) => {
     fieldName?.length > 0 && fieldName?.map((item) => {
       professionsEditedValue?.push({
-        parentName: item?.parentName,
+        categoryEN: item?.categoryEN,
+        categoryFA: item?.categoryFA,
         id: item?.id,
         name: item?.name,
       })
@@ -246,7 +258,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
           return (
             <div className={styles.radioButtonContainer}>
               <div>
-                <input type="radio" value="خبره" name="expectedPage" defaultChecked={editedValue === "خبره"} onChange={onChangeHandler} />خبره
+                <input type="radio" value="کاردان" name="expectedPage" defaultChecked={editedValue === "کاردان"} onChange={onChangeHandler} />کاردان
               </div>
               <div>
                 <input type="radio" value="متخصص" name="expectedPage" defaultChecked={editedValue === "متخصص"} onChange={onChangeHandler} />متخصص
@@ -527,6 +539,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
             setGreenhouse(greenhouseDefaultValue)
             setLivestockAndBirdsProfessions(livestockAndBirdsProfessionsDefaultValue)
             setVeterinaryProfessions(veterinaryProfessionsDefaultValue)
+            setComprehensiveProfessions(comprehensiveProfessionsDefaultValue)
           }, [])
 
           // agricultureAndGarden
@@ -706,6 +719,7 @@ const Modal = ({ setModal, setIsOpen, setEdited, editableTitle, editableValue, s
     createProfessions(greenhouseValue);
     createProfessions(livestockAndBirdsProfessionsValue);
     createProfessions(veterinaryProfessionsValue);
+    createProfessions(comprehensiveProfessionsValue);
     setEdited({ [editableTitle]: professionsEditedValue })
   }
 
