@@ -9,6 +9,7 @@ import Cropper from 'react-easy-crop'
 import { useCallback } from 'react'
 import getCroppedImg from '../helper/cropImage'
 import axios from 'axios'
+import { Modal as AntModal } from 'antd'
 
 const Modal = ({
   setModal,
@@ -664,7 +665,10 @@ const Modal = ({
         } else if (editableTitle === 'resume') {
           return (
             <div className={styles.imageSelectorContainer}>
-              <a href={process.env.REACT_APP_ARVAN_BASE_URL + editableValue} target='_blank'>
+              <a
+                href={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                target='_blank'
+              >
                 دانلود فایل
               </a>
               <label for='file-upload' className={styles.fileUpload}>
@@ -1348,38 +1352,139 @@ const Modal = ({
             </div>
           )
         } else {
-          if (
-            editableTitle === 'academicDegreeDocument' ||
-            editableTitle === 'avatar' ||
-            editableTitle === 'cover' ||
-            editableTitle === 'engineeringSystemCard' ||
-            editableTitle === 'resume' ||
+          if (editableTitle === 'avatar' || editableTitle === 'cover') {
+            return (
+              <div className={styles.imageSelectorContainer}>
+                {cropedFile ? (
+                  <img
+                    className={
+                      editableTitle === 'avatar' ? styles.avatar : styles.cover
+                    }
+                    src={cropedFile}
+                  />
+                ) : selectedFile ? (
+                  <>
+                    <Cropper
+                      image={selectedFile}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={editableTitle === 'avatar' ? 1 : 13 / 4}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                    <button
+                      className={styles.cropButton}
+                      onClick={showCroppedImage}
+                    >
+                      اعمال
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      className={
+                        editableTitle === 'avatar'
+                          ? styles.avatar
+                          : styles.cover
+                      }
+                      src={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                    />
+                    <label for='file-upload' className={styles.fileUpload}>
+                      آپلود فایل جدید
+                    </label>
+                    <input
+                      className={styles.inputFile}
+                      id='file-upload'
+                      type='file'
+                      accept='.jpg,.jpeg,.png'
+                      multiple={false}
+                      onChange={onChangeHandler}
+                    />
+                  </>
+                )}
+              </div>
+            )
+          } else if (
+            editableTitle === 'identityDocument' ||
             editableTitle === 'studentCard' ||
-            editableTitle === 'nationalCard'
+            editableTitle === 'engineeringSystemCard'
           ) {
             return (
               <div className={styles.imageSelectorContainer}>
-                {/* <img className={styles.avatar} src={editableValue} /> */}
-                {/* <label for='file-upload' className={styles.fileUpload}>
+                {privateLink ? (
+                  <a href={privateLink} target='_blank'>
+                    دانلود فایل
+                  </a>
+                ) : (
+                  <p
+                    onClick={getPrivateLink}
+                    className={styles.filePreviewLink}
+                  >
+                    مشاهده فایل
+                  </p>
+                )}
+                <label for='file-upload' className={styles.fileUpload}>
                   آپلود فایل جدید
-                </label> */}
-                <Cropper
-                  image={selectedFile}
-                  crop={crop}
-                  zoom={zoom}
-                  aspect={4 / 3}
-                  onCropChange={setCrop}
-                  onCropComplete={onCropComplete}
-                  onZoomChange={setZoom}
-                />
-                {/* <input
+                </label>
+                <input
                   className={styles.inputFile}
                   id='file-upload'
                   type='file'
                   accept='.jpg,.jpeg,.png'
                   multiple={false}
-                  onChange={onChangeHandler}
-                /> */}
+                  onChange={onPrivateAndNonCroppedFilesChangeHandler}
+                />
+              </div>
+            )
+          } else if (editableTitle === 'resume') {
+            return (
+              <div className={styles.imageSelectorContainer}>
+                <a
+                  href={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                  target='_blank'
+                >
+                  دانلود فایل
+                </a>
+                <label for='file-upload' className={styles.fileUpload}>
+                  آپلود فایل جدید
+                </label>
+                <input
+                  className={styles.inputFile}
+                  id='file-upload'
+                  type='file'
+                  accept='.pdf'
+                  multiple={false}
+                  onChange={onPrivateAndNonCroppedFilesChangeHandler}
+                />
+              </div>
+            )
+          } else if (editableTitle === 'academicDegreeDocument') {
+            return (
+              <div className={styles.imageSelectorContainer}>
+                {privateLink ? (
+                  <a href={privateLink} target='_blank'>
+                    دانلود فایل
+                  </a>
+                ) : (
+                  <p
+                    onClick={getPrivateLink}
+                    className={styles.filePreviewLink}
+                  >
+                    مشاهده فایل
+                  </p>
+                )}
+                <label for='file-upload' className={styles.fileUpload}>
+                  آپلود فایل جدید
+                </label>
+                <input
+                  className={styles.inputFile}
+                  id='file-upload'
+                  type='file'
+                  accept='.pdf, .jpg'
+                  multiple={false}
+                  onChange={onPrivateAndNonCroppedFilesChangeHandler}
+                />
               </div>
             )
           } else {
@@ -1582,155 +1687,88 @@ const Modal = ({
     })
   }
 
+  const onModalOk = () => {
+    if (editableTitle === 'expertises') {
+      setExpertises()
+    } else if (editableTitle === 'professions') {
+      setProfessions()
+    } else if (editableTitle === 'activityFields') {
+      setActivityFields()
+    } else if (editableTitle === 'consultingFields') {
+      setConsultingFields()
+    } else if (editableTitle === 'academicDegree') {
+      setAcademicDegree()
+    } else if (editableTitle === 'academicField') {
+      setAcademicField()
+    } else if (editableTitle === 'academicRank') {
+      setAcademicRank()
+    } else if (editableTitle === 'workplaceOrganizationPosition') {
+      setWorkplaceOrganizationPosition()
+    } else if (editableTitle === 'workplaceOrganizationType') {
+      setWorkplaceOrganizationType()
+    } else if (editableTitle === 'avatar' || editableTitle === 'cover') {
+      if (selectedFile) {
+        if (cropedFile) {
+          sendFileName()
+        } else {
+          alert('دکمه اعمال برش را بزنید')
+        }
+      } else {
+        setEdited('NOT_MODIFIED')
+        setModal(null)
+        setIsOpen(false)
+      }
+    } else if (
+      editableTitle === 'academicDegreeDocument' ||
+      editableTitle === 'identityDocument' ||
+      editableTitle === 'studentCard' ||
+      editableTitle === 'engineeringSystemCard' ||
+      editableTitle === 'resume'
+    ) {
+      if (selectedFile) {
+        sendPrivateAndNonCroppedFileName()
+      } else {
+        setEdited('NOT_MODIFIED')
+        setModal(null)
+        setIsOpen(false)
+      }
+    } else if (forWhat === 'QUE') {
+      setEdited({
+        data: {
+          [editableTitle]: queEditedValue
+        }
+      })
+    } else {
+      setEdited({ [editableTitle]: editedValue })
+    }
+    if (
+      editableTitle !== 'academicDegreeDocument' &&
+      editableTitle !== 'avatar' &&
+      editableTitle !== 'cover' &&
+      editableTitle !== 'engineeringSystemCard' &&
+      editableTitle !== 'resume' &&
+      editableTitle !== 'studentCard' &&
+      editableTitle !== 'nationalCard'
+    ) {
+      setIsOpen(false)
+      setModal(null)
+    }
+  }
+
   return (
-    <React.Fragment>
-      <div
-        className={styles.darkBG}
-        onClick={() => {
-          setModal(null)
-          setIsOpen(false)
-        }}
-      />
-      <div className={styles.centered}>
-        <div className={styles.modal}>
-          <div className={styles.modalHeader}>
-            <h5 className={styles.heading}>{editableTitle} ویرایش</h5>
-          </div>
-          <button
-            className={styles.closeBtn}
-            onClick={() => {
-              setModal(null)
-              setIsOpen(false)
-            }}
-          >
-            <RiCloseLine style={{ marginBottom: '-3px' }} />
-          </button>
-          <div className={styles.modalContent}>
-            <label>لطفا مقدار جدید را وارد کنید</label>
-            {forWhat === 'EXP'
-              ? returnRelatedComponentForExperts()
-              : returnRelatedComponentForQuestionnaires()}
-          </div>
-          <div className={styles.modalActions}>
-            <div className={styles.actionsContainer}>
-              <button
-                className={styles.saveBtn}
-                onClick={() => {
-                  if (editableTitle === 'expertises') {
-                    setExpertises()
-                  } else if (editableTitle === 'professions') {
-                    setProfessions()
-                  } else if (editableTitle === 'activityFields') {
-                    setActivityFields()
-                  } else if (editableTitle === 'consultingFields') {
-                    setConsultingFields()
-                  } else if (editableTitle === 'academicDegree') {
-                    setAcademicDegree()
-                  } else if (editableTitle === 'academicField') {
-                    setAcademicField()
-                  } else if (editableTitle === 'academicRank') {
-                    setAcademicRank()
-                  } else if (
-                    editableTitle === 'workplaceOrganizationPosition'
-                  ) {
-                    setWorkplaceOrganizationPosition()
-                  } else if (editableTitle === 'workplaceOrganizationType') {
-                    setWorkplaceOrganizationType()
-                  } else if (
-                    editableTitle === 'avatar' ||
-                    editableTitle === 'cover'
-                  ) {
-                    if (selectedFile) {
-                      if (cropedFile) {
-                        sendFileName()
-                      } else {
-                        alert('دکمه اعمال برش را بزنید')
-                      }
-                    } else {
-                      setEdited('NOT_MODIFIED')
-                      setModal(null)
-                      setIsOpen(false)
-                    }
-                  } else if (
-                    editableTitle === 'academicDegreeDocument' ||
-                    editableTitle === 'identityDocument' ||
-                    editableTitle === 'studentCard' ||
-                    editableTitle === 'engineeringSystemCard' ||
-                    editableTitle === 'resume'
-                  ) {
-                    if (selectedFile) {
-                      sendPrivateAndNonCroppedFileName()
-                    } else {
-                      setEdited('NOT_MODIFIED')
-                      setModal(null)
-                      setIsOpen(false)
-                    }
-                  } else if (editableTitle === 'coverUrl') {
-                    let formData = new FormData()
-                    formData.append('avatar', null)
-                    formData.append('resume', null)
-                    formData.append('lastDegree', null)
-                    formData.append('cover', editedValue)
-                    formData.append('studentCard', null)
-                    formData.append('engineeringSystemCard', null)
-                    setEdited(formData)
-                  } else if (editableTitle === 'studentCardUrl') {
-                    let formData = new FormData()
-                    formData.append('avatar', null)
-                    formData.append('resume', null)
-                    formData.append('lastDegree', null)
-                    formData.append('cover', null)
-                    formData.append('studentCard', editedValue)
-                    formData.append('engineeringSystemCard', null)
-                    setEdited(formData)
-                  } else if (editableTitle === 'engineeringSystemCardUrl') {
-                    let formData = new FormData()
-                    formData.append('avatar', null)
-                    formData.append('resume', null)
-                    formData.append('lastDegree', null)
-                    formData.append('cover', null)
-                    formData.append('studentCard', null)
-                    formData.append('engineeringSystemCard', editedValue)
-                    setEdited(formData)
-                  } else if (forWhat === 'QUE') {
-                    setEdited({
-                      data: {
-                        [editableTitle]: queEditedValue
-                      }
-                    })
-                  } else {
-                    setEdited({ [editableTitle]: editedValue })
-                  }
-                  if (
-                    editableTitle !== 'academicDegreeDocument' &&
-                    editableTitle !== 'avatar' &&
-                    editableTitle !== 'cover' &&
-                    editableTitle !== 'engineeringSystemCard' &&
-                    editableTitle !== 'resume' &&
-                    editableTitle !== 'studentCard' &&
-                    editableTitle !== 'nationalCard'
-                  ) {
-                    setIsOpen(false)
-                    setModal(null)
-                  }
-                }}
-              >
-                ذخیره
-              </button>
-              <button
-                className={styles.cancelBtn}
-                onClick={() => {
-                  setModal(null)
-                  setIsOpen(false)
-                }}
-              >
-                لغو
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
+    <AntModal
+      title='ویرایش'
+      visible={true}
+      onOk={onModalOk}
+      onCancel={() => {
+        setModal(null)
+        setIsOpen(false)
+      }}
+    >
+      {forWhat === 'EXP'
+        ? returnRelatedComponentForExperts()
+        : returnRelatedComponentForQuestionnaires()}
+    </AntModal>
   )
 }
 

@@ -1887,7 +1887,7 @@ const staticData = {
 // }
 
 const object = {
-  // cover: "iranexpert/696c1bf1-6f83-4ad5-b7f8-146239b1e785.jpg",
+  cover: "iranexpert/696c1bf1-6f83-4ad5-b7f8-146239b1e785.jpg",
   // resume: "iranexpert/a46a681c-13d5-4411-9612-5876a2cd2924.pdf",
   // studentCard: "iranexpert/1.png",
   // identityDocument: "iranexpert/69b28b74-6f8e-4017-87d7-3b2fc08c3e53.jpg",

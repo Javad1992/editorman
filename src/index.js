@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Modal from './components/Modal'
+import 'antd/dist/antd.css';
 
 export const EditorContainer = ({ toEdit, setEdited, setModal, staticData, forWhat }) => {
   const [editable] = useState(toEdit)
