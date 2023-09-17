@@ -89,6 +89,25 @@ label {
 .centerInput {
   direction: rtl;
   padding: 5px;
+  width: 45%;
+  height: 5%;
+  font-size: 14px;
+  border-width: 0px;
+  border-color: #CCCCCC;
+  background-color: #FFFFFF;
+  color: #000000;
+  border-style: inset;
+  border-radius: 8px;
+  box-shadow: 0px 0px 4px rgba(66,66,66,.34);
+  text-shadow: 0px 0px 0px rgba(66,66,66,.75);
+}
+
+.bigCenterInput {
+  direction: rtl;
+  padding: 5px;
+  width: 60%;
+  word-break: normal;
+  height: 20%;
   font-size: 14px;
   border-width: 0px;
   border-color: #CCCCCC;
@@ -122,6 +141,16 @@ select {
   /* border: 1px solid rgb(204, 204, 204); */
   border-radius: 7px;
   width: auto;
+  background: rgb(255, 255, 255);
+  padding: 10px;
+  outline: none;
+  direction: rtl;
+}
+
+.singleSelect {
+  /* border: 1px solid rgb(204, 204, 204); */
+  border-radius: 7px;
+  width: 30%;
   background: rgb(255, 255, 255);
   padding: 10px;
   outline: none;
@@ -242,12 +271,30 @@ align-items: center;
     border-radius: 0.5rem;
   }
 
+  .cover{
+    display: flex;
+    width: 1300px;
+    height: 400px;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+  }
+
   .imageSelectorContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+  }
+
+  .imageCropperModalContainer{
+    z-index: 99;
+    position: relative;
+    background: red;
+  }
+
+  .cropButton{
+    z-index: 100;
   }
 
   .inputFile{
@@ -267,6 +314,12 @@ align-items: center;
     width: 80%;
     margin-bottom: 30px;
     direction: rtl;
+  }
+
+  .filePreviewLink{
+    cursor:pointer;
+    color: blue;
+    z-index: 999;
   }
 
   .selectDate{
