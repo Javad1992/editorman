@@ -14,6 +14,7 @@ import { Modal as AntModal } from 'antd'
 const Modal = ({
   setModal,
   setIsOpen,
+  callBack,
   setEdited,
   editableTitle,
   editableValue,
@@ -511,7 +512,8 @@ const Modal = ({
           var file = new File([blob], editableTitle + '.' + fileExtension)
           formData.append('file', file)
           const arvanResponse = await axios.post(url, formData)
-          setEdited({ [editableTitle]: key })
+          // setEdited({ [editableTitle]: key })
+          callBack({ [editableTitle]: key })
           setIsOpen(false)
           setModal(null)
         })
@@ -537,7 +539,8 @@ const Modal = ({
       })
       formData.append('file', selectedFile)
       const arvanResponse = await axios.post(url, formData)
-      setEdited({ [editableTitle]: key })
+      // setEdited({ [editableTitle]: key })
+      callBack({ [editableTitle]: key })
       setIsOpen(false)
       setModal(null)
     } catch (error) {
@@ -1621,29 +1624,41 @@ const Modal = ({
 
   const setAcademicDegree = () => {
     createAcademicDegree(academicDegreeIdValue)
-    setEdited({ [editableTitle + 'Id']: academicDegreeIdEditedValue })
+    // setEdited({ [editableTitle + 'Id']: academicDegreeIdEditedValue })
+    callBack({ [editableTitle + 'Id']: academicDegreeIdEditedValue })
   }
 
   const setAcademicField = () => {
     createAcademicField(academicFieldIdValue)
-    setEdited({ [editableTitle + 'Id']: academicFieldIdEditedValue })
+    // setEdited({ [editableTitle + 'Id']: academicFieldIdEditedValue })
+    callBack({ [editableTitle + 'Id']: academicDegreeIdEditedValue })
   }
 
   const setAcademicRank = () => {
     createAcademicRank(academicRankIdValue)
-    setEdited({ [editableTitle + 'Id']: academicRankIdEditedValue })
+    // setEdited({ [editableTitle + 'Id']: academicRankIdEditedValue })
+    callBack({ [editableTitle + 'Id']: academicRankIdEditedValue })
   }
 
   const setActivityFields = () => {
     createActivities(activityFieldsValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Ids']: activityFieldsEditedValue.map((item) => item?.id)
+    // })
+    callBack({
       [editableTitle + 'Ids']: activityFieldsEditedValue.map((item) => item?.id)
     })
   }
 
   const setConsultingFields = () => {
     createConsultings(consultingFieldsValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Ids']: consultingFieldsEditedValue.map(
+    //     (item) => item?.id
+    //   )
+    // })
+
+    callBack({
       [editableTitle + 'Ids']: consultingFieldsEditedValue.map(
         (item) => item?.id
       )
@@ -1652,14 +1667,20 @@ const Modal = ({
 
   const setWorkplaceOrganizationPosition = () => {
     createWorkplaceOrganizationPosition(workplaceOrganizationPositionIdValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Id']: workplaceOrganizationPositionIdEditedValue
+    // })
+    callBack({
       [editableTitle + 'Id']: workplaceOrganizationPositionIdEditedValue
     })
   }
 
   const setWorkplaceOrganizationType = () => {
     createWorkplaceOrganizationType(workplaceOrganizationTypeIdValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Id']: workplaceOrganizationTypeIdEditedValue
+    // })
+    callBack({
       [editableTitle + 'Id']: workplaceOrganizationTypeIdEditedValue
     })
   }
@@ -1671,7 +1692,10 @@ const Modal = ({
     createExpertises(hydroponicGreenhouseValue)
     createExpertises(livestockAndBirdsValue)
     createExpertises(veterinaryValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Ids']: expertisesEditedValue.map((item) => item?.id)
+    // })
+    callBack({
       [editableTitle + 'Ids']: expertisesEditedValue.map((item) => item?.id)
     })
   }
@@ -1682,7 +1706,10 @@ const Modal = ({
     createProfessions(livestockAndBirdsProfessionsValue)
     createProfessions(veterinaryProfessionsValue)
     createProfessions(comprehensiveProfessionsValue)
-    setEdited({
+    // setEdited({
+    //   [editableTitle + 'Ids']: professionsEditedValue.map((item) => item?.id)
+    // })
+    callBack({
       [editableTitle + 'Ids']: professionsEditedValue.map((item) => item?.id)
     })
   }
@@ -1714,7 +1741,8 @@ const Modal = ({
           alert('دکمه اعمال برش را بزنید')
         }
       } else {
-        setEdited('NOT_MODIFIED')
+        // setEdited('NOT_MODIFIED')
+        callBack('NOT_MODIFIED')
         setModal(null)
         setIsOpen(false)
       }
@@ -1728,7 +1756,8 @@ const Modal = ({
       if (selectedFile) {
         sendPrivateAndNonCroppedFileName()
       } else {
-        setEdited('NOT_MODIFIED')
+        // setEdited('NOT_MODIFIED')
+        callBack('NOT_MODIFIED')
         setModal(null)
         setIsOpen(false)
       }
@@ -1739,7 +1768,8 @@ const Modal = ({
         }
       })
     } else {
-      setEdited({ [editableTitle]: editedValue })
+      // setEdited({ [editableTitle]: editedValue })
+      callBack({ [editableTitle]: editedValue })
     }
     if (
       editableTitle !== 'academicDegreeDocument' &&
