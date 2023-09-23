@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Modal from './components/Modal'
 import 'antd/dist/antd.css';
 
-export const EditorContainer = ({ toEdit, callBack, setModal, staticData, forWhat }) => {
+export const EditorContainer = ({ toEdit, callBack, setEdited, setModal, staticData, forWhat }) => {
   const [editable] = useState(toEdit)
   const [element] = Object.entries(editable)
 
