@@ -619,7 +619,7 @@ const Modal = ({
                     className={
                       editableTitle === 'avatar' ? styles.avatar : styles.cover
                     }
-                    src={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                    src={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
                   />
                   <label for='file-upload' className={styles.fileUpload}>
                     آپلود فایل جدید
@@ -669,7 +669,7 @@ const Modal = ({
           return (
             <div className={styles.imageSelectorContainer}>
               <a
-                href={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                href={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
                 target='_blank'
               >
                 دانلود فایل
@@ -1391,7 +1391,7 @@ const Modal = ({
                           ? styles.avatar
                           : styles.cover
                       }
-                      src={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                      src={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
                     />
                     <label for='file-upload' className={styles.fileUpload}>
                       آپلود فایل جدید
@@ -1444,7 +1444,7 @@ const Modal = ({
             return (
               <div className={styles.imageSelectorContainer}>
                 <a
-                  href={process.env.REACT_APP_ARVAN_BASE_URL + editableValue}
+                  href={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
                   target='_blank'
                 >
                   دانلود فایل
