@@ -1896,6 +1896,190 @@ const object = {
   academicDegreeDocument: "iranexpert/1.png",
 }
 
+// const object = {
+//   "zone": "نقش جهان",
+//   "role": "EXPERT",
+//   "city": "اصفهان",
+//   "email": "agroyaar.ict@gmail.com",
+//   "takId": "dfgklsdfklgjsdibmbdijf",
+//   "score": 50,
+//   "cover": "iranexpert/experts/accd89bb-a245-4e50-9e14-297159498b32/1696835683142-1696764588351-pexels-tom-fisk-1483880.jpg",
+//   "pscore": 0,
+//   "avatar": "iranexpert/experts/accd89bb-a245-4e50-9e14-297159498b32/1696835665542-1694932497720-IMG_20230914_171419.jpg",
+//   "resume": "iranexpert/experts/accd89bb-a245-4e50-9e14-297159498b32/1696835718110-زعفران---یک-هکتاری.pdf",
+//   "cityId": 127,
+//   "status": "PENDING",
+//   "symbol": {
+//       "id": 3,
+//       "categoryEN": "EXPERTS_SYMBOLS",
+//       "categoryFA": "نمادهای کارشناسان",
+//       "name": "دانشجو",
+//       "iconURL": "https://agroiranexpert.s3.ir-thr-at1.arvanstorage.ir/statics/symbols/student.png",
+//       "iconLargeURL": "https://agroiranexpert.s3.ir-thr-at1.arvanstorage.ir/statics/symbols/student-large.png"
+//   },
+//   "aboutMe": "کارشناس کشاورزی هستم. ",
+//   "symbolId": 3,
+//   "username": "mojtabakamrood",
+//   "lastName": "کامرود",
+//   "subState": null,
+//   "bankName": null,
+//   "password": null,
+//   "province": "اصفهان",
+//   "lastState": null,
+//   "badgesIds": [],
+//   "firstName": "مجتبی",
+//   "fatherName": "حسین",
+//   "university": "فردوسی مشهد",
+//   "telegramId": "Agroyaar_com",
+//   "provinceId": 4,
+//   "shopStatus": "DISABLE",
+//   "hasVehicle": null,
+//   "expertCode": "EMOKA298631",
+//   "expertises": [
+//       {
+//           "id": 80,
+//           "categoryEN": "EXPERTISES_GARDENS",
+//           "categoryFA": "باغات",
+//           "name": "پسته"
+//       },
+//       {
+//           "id": 81,
+//           "categoryEN": "EXPERTISES_GARDENS",
+//           "categoryFA": "باغات",
+//           "name": "سیب، گلابی و به"
+//       },
+//       {
+//           "id": 82,
+//           "categoryEN": "EXPERTISES_GARDENS",
+//           "categoryFA": "باغات",
+//           "name": "هلو و شلیل"
+//       }
+//   ],
+//   "professions": [
+//       {
+//           "id": 2,
+//           "categoryEN": "PROFESSIONS_COMPREHENSIVE_PROFESSIONS",
+//           "categoryFA": "حر ف جامع",
+//           "name": "سازنده ماشین آلات کشاورزی"
+//       }
+//   ],
+//   "phoneNumber": "09363744951",
+//   "linkedInURL": "https://www.linkedin.com/in/mojtaba-hosseinian-4a50b0150/",
+//   "studentCard": null,
+//   "instagramId": "mojtaba_hosseinian",
+//   "currentState": "EXPERT_SUPPORT",
+//   "academicRank": null,
+//   "nationalCode": "0007912986",
+//   "academicField": {
+//       "id": 5,
+//       "categoryEN": "ACADEMIC_FIELD",
+//       "categoryFA": "رشته تحصیلی",
+//       "name": "علوم علف‌های هرز"
+//   },
+//   "landingNumber": "05191004601",
+//   "latinLastName": "KAMROOD",
+//   "expertisesIds": [
+//       80,
+//       81,
+//       82
+//   ],
+//   "professionsIds": [
+//       2
+//   ],
+//   "academicRankId": null,
+//   "latinFirstName": "MOJTABA",
+//   "academicDegree": {
+//       "id": 4,
+//       "categoryEN": "ACADEMIC_DEGREE",
+//       "categoryFA": "مدرک تحصیلی",
+//       "name": "دانشجوی دکتری"
+//   },
+//   "bankIBANNumber": null,
+//   "activityFields": [
+//       {
+//           "id": 14,
+//           "categoryEN": "EXECUTIVE_SKILLS_ACTIVITY",
+//           "categoryFA": "زمینه فعالیت",
+//           "name": "باغبانی"
+//       }
+//   ],
+//   "shopPhoneNumber": null,
+//   "researchGateURL": "https://www.researchgate.net/",
+//   "academicFieldId": 5,
+//   "otherExpertises": "تست سایر",
+//   "onlyPersonalPage": false,
+//   "identityDocument": null,
+//   "academicDegreeId": 4,
+//   "otherProfessions": "تست سایر",
+//   "googleScholarURL": "https://scholar.google.com/citations?user=v8RbnkgAAAAJ&hl=en",
+//   "consultingFields": [
+//       {
+//           "id": 3,
+//           "categoryEN": "EXECUTIVE_SKILLS_CONSULTING",
+//           "categoryFA": "زمینه مشاوره",
+//           "name": "مشاوره باغبانی"
+//       }
+//   ],
+//   "willingMakeVisit": false,
+//   "wordpressAuthorId": null,
+//   "bankAccountNumber": null,
+//   "activityFieldsIds": [
+//       14
+//   ],
+//   "consultingFieldsIds": [
+//       3
+//   ],
+//   "academicOrientation": "علف کش ها",
+//   "phoneNumberIsPublic": true,
+//   "whatsappPhoneNumber": "09156633064",
+//   "agriculturalActivity": false,
+//   "bankAccountHolderName": null,
+//   "otherSocialNetworkURL": "agrodayan.com",
+//   "engineeringSystemCard": "iranexpert/experts/accd89bb-a245-4e50-9e14-297159498b32/1696835704168-1696654974572-1695879065766-deutz.jpg",
+//   "academicDegreeDocument": "iranexpert/experts/accd89bb-a245-4e50-9e14-297159498b32/1696835694932-1696064502579-20190612082352-(1).jpg",
+//   "engineeringSystemField": "1",
+//   "engineeringSystemNumber": "33333",
+//   "workplaceOrganizationName": "جهاد مشهد",
+//   "workplaceOrganizationType": {
+//       "id": 1,
+//       "categoryEN": "WORKPLACE_ORGANIZATIONS",
+//       "categoryFA": "سازمان محل کار",
+//       "name": "جهاد کشاورزی",
+//       "positionsIds": [
+//           1,
+//           2,
+//           3,
+//           4
+//       ]
+//   },
+//   "workplaceOrganizationTypeId": 1,
+//   "workplaceOrganizationPosition": {
+//       "id": 2,
+//       "categoryEN": "WORKPLACE_ORGANIZATIONS_POSITIONS",
+//       "categoryFA": "سمت",
+//       "name": "معاونت",
+//       "academicRanksIds": null
+//   },
+//   "workplaceOrganizationPositionId": 2,
+//   "workplaceOrganizationPositionName": null,
+//   "agriculturalEngineeringSystemOrganizationMember": true,
+//   "createdAt": "2023-10-09T07:15:39.455Z",
+//   "updatedAt": "2023-10-09T07:15:39.473Z",
+//   "deletedAt": null,
+//   "modified": null,
+//   "records": [
+//       {
+//           "id": "ba4238e3-5ea3-459f-8dcb-b56227f6b8b3",
+//           "category": "EXPERT_REGISTRATION",
+//           "comments": {},
+//           "relatedItemId": "accd89bb-a245-4e50-9e14-297159498b32",
+//           "createdAt": "2023-10-09T07:15:39.462Z",
+//           "updatedAt": null,
+//           "deletedAt": null
+//       }
+//   ]
+// }
+
 const App = () => {
   const [edited, setEdited] = useState(null)
   const [modal, setModal] = useState(null)
@@ -1903,6 +2087,7 @@ const App = () => {
     setModal(
       <EditorContainer
         toEdit={object}
+        callBack={callBack}
         setEdited={setEdited}
         setModal={setModal}
         staticData={staticData}
@@ -1910,7 +2095,9 @@ const App = () => {
       />
     )
 
-  console.log('edited: ', edited)
+    const callBack = (e) => {
+      console.log('edited: ', e)
+    }
 
   return (
     <div className='main'>
