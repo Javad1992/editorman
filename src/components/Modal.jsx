@@ -9,7 +9,7 @@ import Cropper from 'react-easy-crop'
 import { useCallback } from 'react'
 import getCroppedImg from '../helper/cropImage'
 import axios from 'axios'
-import { Modal as AntModal } from 'antd'
+import { Modal as AntModal, Button } from 'antd'
 
 const Modal = ({
   setModal,
@@ -619,7 +619,9 @@ const Modal = ({
                     className={
                       editableTitle === 'avatar' ? styles.avatar : styles.cover
                     }
-                    src={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
+                    src={
+                      'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue
+                    }
                   />
                   <label for='file-upload' className={styles.fileUpload}>
                     آپلود فایل جدید
@@ -1391,7 +1393,9 @@ const Modal = ({
                           ? styles.avatar
                           : styles.cover
                       }
-                      src={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
+                      src={
+                        'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue
+                      }
                     />
                     <label for='file-upload' className={styles.fileUpload}>
                       آپلود فایل جدید
@@ -1444,7 +1448,9 @@ const Modal = ({
             return (
               <div className={styles.imageSelectorContainer}>
                 <a
-                  href={'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue}
+                  href={
+                    'https://s3.ir-thr-at1.arvanstorage.ir/' + editableValue
+                  }
                   target='_blank'
                 >
                   دانلود فایل
@@ -1787,13 +1793,42 @@ const Modal = ({
 
   return (
     <AntModal
+      centered
       title='ویرایش'
       visible={true}
-      onOk={onModalOk}
-      onCancel={() => {
-        setModal(null)
-        setIsOpen(false)
-      }}
+      // onOk={onModalOk}
+      // onCancel={() => {
+      //   setModal(null)
+      //   setIsOpen(false)
+      // }}
+      footer={[
+        <Button key="submit" onClick={onModalOk}>
+          تایید
+        </Button>,
+        <Button key="cancel" onClick={() => {
+          setModal(null)
+          setIsOpen(false)
+        }}>
+          لغو
+        </Button>,
+         (editableTitle === 'academicDegreeDocument' ||
+         editableTitle === 'avatar' ||
+         editableTitle === 'cover' ||
+         editableTitle === 'engineeringSystemCard' ||
+         editableTitle === 'resume' ||
+         editableTitle === 'studentCard' ||
+         editableTitle === 'nationalCard') &&
+        <Button
+          key="delete"
+          onClick={()=>{
+            callBack({ [editableTitle]: null })
+            setModal(null)
+            setIsOpen(false)
+          }}
+        >
+          حذف
+        </Button>,
+      ]}
     >
       {forWhat === 'EXP'
         ? returnRelatedComponentForExperts()
